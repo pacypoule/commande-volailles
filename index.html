@@ -170,6 +170,15 @@ button:hover{
     color:var(--green);
     border:2px solid var(--green);
 }
+.disabled-date {
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.disabled-date input {
+  pointer-events: none;
+}
 
 </style>
 </head>
@@ -359,6 +368,7 @@ button:hover{
 </details>
 
 <!-- FIN BLOC 3 -->
+
 <!-- DEBUT BLOC ACTIONS --> 
 
 <div class="actions"> 
@@ -370,7 +380,33 @@ button:hover{
 <!-- DEBUT BLOC 4 -->
 
 <script>
+<!-- Désactivation automatique des dates expirées -->
+const today = new Date();
 
+// Liste des dates limites
+const deadlines = [
+  { date: "17 mars", limit: "2026-02-24" },
+  { date: "31 mars", limit: "2026-03-11" },
+  { date: "12 mai", limit: "2026-04-22" },
+  { date: "09 juin", limit: "2026-05-20" },
+  { date: "23 juin", limit: "2026-06-04" },
+  { date: "01 septembre", limit: "2026-08-12" }
+];
+
+// Fonction de désactivation
+deadlines.forEach(item => {
+    const limitDate = new Date(item.limit);
+    if (today > limitDate) {
+        const input = document.querySelector(
+            'input[name="date"][value="' + item.date + '"]'
+        );
+        if (input) {
+            input.disabled = true;
+            input.parentNode.classList.add("disabled-date");
+            input.parentNode.innerHTML += " (commande clôturée)";
+        }
+    }
+});
 function genererEmail() {
 
     const nom = document.getElementById('nom').value.trim();
