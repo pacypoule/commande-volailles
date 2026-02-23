@@ -1,99 +1,434 @@
+<!-- DEBUT BLOC 1 -->
 <!DOCTYPE html>
-<html lang='fr'>
+<html lang="fr">
 <head>
-<meta charset='UTF-8' />
-<meta name='viewport' content='width=device-width, initial-scale=1' />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Commande de volailles</title>
+
 <style>
-:root{--green:#2f855a;--green-dark:#276749;--bg:#f4f6f9;--text:#333;--card:#fff}
-*{box-sizing:border-box}
-body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:0;background:var(--bg);color:var(--text)}
-header{background:var(--green);color:#fff;padding:22px 16px;text-align:center;font-size:28px;font-weight:700}
-.container{width:92%;max-width:1200px;margin:24px auto 40px}
-h2{margin:28px 0 10px;color:var(--green);font-size:22px}
-.info{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.info input[type=text]{padding:10px 12px;border:2px solid var(--green);border-radius:8px;font-size:16px;background:#fff}
-.info input#telephone{grid-column:span 2}
-@media(max-width:640px){.info{grid-template-columns:1fr}.info input#telephone{grid-column:span 1}}
+
+:root{
+    --green:#2f855a;
+    --green-dark:#276749;
+    --bg:#f4f6f9;
+    --text:#333;
+    --card:#fff;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    margin:0;
+    padding:0;
+    background:var(--bg);
+    color:var(--text);
+}
+
+header{
+    background:var(--green);
+    color:#fff;
+    padding:22px 16px;
+    text-align:center;
+    font-size:28px;
+    font-weight:700;
+}
+
+.container{
+    width:92%;
+    max-width:1200px;
+    margin:24px auto 40px;
+}
+
+h2{
+    margin:28px 0 10px;
+    color:var(--green);
+    font-size:22px;
+}
+
+/* Infos client */
+.info{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+.info input{
+    padding:10px 12px;
+    border:2px solid var(--green);
+    border-radius:8px;
+    font-size:16px;
+    background:#fff;
+}
+#telephone{
+    grid-column: span 2;
+}
+
+@media(max-width:640px){
+    .info{ grid-template-columns:1fr; }
+    #telephone{ grid-column: span 1; }
+}
+
+/* Dates */
+.dates{
+    padding:10px 0 20px 0;
+    font-size:17px;
+    line-height:28px;
+}
+.dates label{ cursor:pointer; }
+
 /* Accordéons */
-details{background:#fff;border-radius:12px;margin-top:16px;box-shadow:0 4px 12px rgba(0,0,0,.08);overflow:hidden}
-summary{list-style:none;cursor:pointer;padding:16px 18px;font-weight:700;font-size:18px;color:#1f2d24;display:flex;align-items:center;gap:10px;background:#fff;border-left:6px solid var(--green);user-select:none}
-summary::marker{display:none}
-.chevron{margin-left:auto;transition:transform .2s ease}
-details[open] .chevron{transform:rotate(90deg)}
-.grid{padding:14px 16px 18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;background:#fff}
-.card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.06);text-align:center}
-.card img{width:100%;height:230px;object-fit:contain;background:#e9e9e9;border-radius:10px;margin-bottom:10px}
-.card label{font-size:16px;font-weight:700;display:block;margin-bottom:6px}
-.qty input[type=number]{width:84px;padding:6px;font-size:16px;border:2px solid var(--green);border-radius:8px;text-align:center}
-.actions{margin-top:28px;text-align:center}
-button{background:var(--green);color:#fff;border:none;padding:14px 22px;font-size:17px;border-radius:10px;cursor:pointer;font-weight:700;min-width:240px;margin-bottom:10px}
-button:hover{background:var(--green-dark)}
-.secondary{background:#fff;color:var(--green);border:2px solid var(--green)}
+details{
+    background:#fff;
+    border-radius:12px;
+    margin-top:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    overflow:hidden;
+}
+summary{
+    list-style:none;
+    cursor:pointer;
+    padding:16px 18px;
+    font-weight:700;
+    font-size:18px;
+    color:#1f2d24;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#fff;
+    border-left:6px solid var(--green);
+}
+summary::marker{ display:none; }
+.chevron{
+    margin-left:auto;
+    transition:transform .2s ease;
+}
+details[open] .chevron{
+    transform:rotate(90deg);
+}
+
+/* Grille volailles */
+.grid{
+    padding:14px 16px 18px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:20px;
+    background:#fff;
+}
+.card{
+    background:#fff;
+    padding:14px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.card img{
+    width:100%;
+    height:230px;
+    object-fit:contain;
+    background:#e9e9e9;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+.card label{
+    font-size:16px;
+    font-weight:700;
+    margin-bottom:6px;
+    display:block;
+}
+.qty input{
+    width:84px;
+    padding:6px;
+    font-size:16px;
+    border:2px solid var(--green);
+    border-radius:8px;
+    text-align:center;
+}
+
+/* Boutons */
+.actions{
+    margin-top:28px;
+    text-align:center;
+}
+button{
+    background:var(--green);
+    color:#fff;
+    border:none;
+    padding:14px 22px;
+    font-size:17px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:700;
+    min-width:240px;
+    margin-bottom:10px;
+}
+button:hover{
+    background:var(--green-dark);
+}
+.secondary{
+    background:#fff;
+    color:var(--green);
+    border:2px solid var(--green);
+}
+
 </style>
 </head>
+
 <body>
+
 <header>Commande de volailles</header>
-<div class='container'>
+
+<div class="container">
+<!-- FIN BLOC 1 -->
+<!-- DEBUT BLOC 2 -->
+
 <h2>Vos informations</h2>
-<div class='info'>
-<input type='text' id='nom' placeholder='Nom *'>
-<input type='text' id='adresse' placeholder='Adresse *'>
-<input type='text' id='telephone' placeholder='Téléphone *'>
+
+<div class="info">
+    <input type="text" id="nom" placeholder="Nom *">
+    <input type="text" id="adresse" placeholder="Adresse *">
+    <input type="text" id="telephone" placeholder="Téléphone *">
 </div>
+
+<h2>Choisissez votre date de livraison</h2>
+
+<div class="dates">
+    <label><input type="radio" name="date" value="17 mars"> 17 mars</label><br>
+    <label><input type="radio" name="date" value="31 mars"> 31 mars</label><br>
+    <label><input type="radio" name="date" value="12 mai"> 12 mai</label><br>
+    <label><input type="radio" name="date" value="09 juin"> 09 juin</label><br>
+    <label><input type="radio" name="date" value="23 juin"> 23 juin</label><br>
+    <label><input type="radio" name="date" value="01 septembre"> 01 septembre</label><br>
+</div>
+
 <h2>Nos volailles</h2>
+
+<!-- FIN BLOC 2 -->
+<!-- DEBUT BLOC 3 -->
+
+<!-- ===================== GRANDES RACES ===================== -->
 <details>
-  <summary>Poules de Grande Race <span class='chevron'>▶</span></summary>
-  <div class='grid'>
-    <div class='card'><img src='Poule rouge.jpg' alt='Poule rouge'><label>Poule rouge</label><div class='qty'><input id='poule_rouge' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Poule noire.jpg' alt='Poule noire'><label>Poule noire</label><div class='qty'><input id='poule_noire' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Coucou.jpg' alt='Coucou'><label>Coucou</label><div class='qty'><input id='coucou' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Sussex.jpg' alt='Sussex'><label>Sussex</label><div class='qty'><input id='sussex' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Faverolle.jpg' alt='Faverolle'><label>Faverolle</label><div class='qty'><input id='faverolle' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Houdan.jpg' alt='Houdan'><label>Houdan</label><div class='qty'><input id='houdan' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Araucana.jpg' alt='Araucana'><label>Araucana</label><div class='qty'><input id='araucana' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Brahma.jpg' alt='Brahma'><label>Brahma</label><div class='qty'><input id='brahma' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Gauloise grise.jpg' alt='Gauloise grise'><label>Gauloise grise</label><div class='qty'><input id='gauloise' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='vorwek.jpg' alt='Vorwerk'><label>Vorwerk</label><div class='qty'><input id='vorwerk' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Cendrée.jpg' alt='Cendrée'><label>Cendrée</label><div class='qty'><input id='cendree' type='number' min='0' value='0'></div></div>
+  <summary>Poules de Grande Race <span class="chevron">▶</span></summary>
+  <div class="grid">
+
+    <div class="card">
+      <img src="Poule rouge.jpg" alt="Poule rouge">
+      <label>Poule rouge</label>
+      <div class="qty"><input id="poule_rouge" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Poule noire.jpg" alt="Poule noire">
+      <label>Poule noire</label>
+      <div class="qty"><input id="poule_noire" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Coucou.jpg" alt="Coucou">
+      <label>Coucou</label>
+      <div class="qty"><input id="coucou" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Sussex.jpg" alt="Sussex">
+      <label>Sussex</label>
+      <div class="qty"><input id="sussex" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Faverolle.jpg" alt="Faverolle">
+      <label>Faverolle</label>
+      <div class="qty"><input id="faverolle" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Houdan.jpg" alt="Houdan">
+      <label>Houdan</label>
+      <div class="qty"><input id="houdan" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Araucana.jpg" alt="Araucana">
+      <label>Araucana</label>
+      <div class="qty"><input id="araucana" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Brahma.jpg" alt="Brahma">
+      <label>Brahma</label>
+      <div class="qty"><input id="brahma" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Gauloise grise.jpg" alt="Gauloise grise">
+      <label>Gauloise grise</label>
+      <div class="qty"><input id="gauloise" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="vorwek.jpg" alt="Vorwerk">
+      <label>Vorwerk</label>
+      <div class="qty"><input id="vorwerk" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Cendrée.jpg" alt="Cendrée">
+      <label>Cendrée</label>
+      <div class="qty"><input id="cendree" type="number" min="0" value="0"></div>
+    </div>
+
   </div>
 </details>
+
+
+<!-- ===================== RACES HYBRIDES ===================== -->
 <details>
-  <summary>Poules Hybrides <span class='chevron'>▶</span></summary>
-  <div class='grid'>
-    <div class='card'><img src='Noirans.jpg' alt='Noirans'><label>Noirans</label><div class='qty'><input id='noirans' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Azur.jpg' alt='Azur'><label>Azur</label><div class='qty'><input id='azur' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Leghorn.jpg' alt='Leghorn'><label>Leghorn</label><div class='qty'><input id='leghorn' type='number' min='0' value='0'></div></div>
+  <summary>Poules Hybrides <span class="chevron">▶</span></summary>
+  <div class="grid">
+
+    <div class="card">
+      <img src="Noirans.jpg" alt="Noirans">
+      <label>Noirans</label>
+      <div class="qty"><input id="noirans" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Azur.jpg" alt="Azur">
+      <label>Azur</label>
+      <div class="qty"><input id="azur" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Leghorn.jpg" alt="Leghorn">
+      <label>Leghorn</label>
+      <div class="qty"><input id="leghorn" type="number" min="0" value="0"></div>
+    </div>
+
   </div>
 </details>
+
+
+<!-- ===================== RACES NAINES ===================== -->
 <details>
-  <summary>Poules Naines <span class='chevron'>▶</span></summary>
-  <div class='grid'>
-    <div class='card'><img src='Soie.jpg' alt='Poule Soie'><label>Poule Soie</label><div class='qty'><input id='soie' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Bantam Pékin.jpg' alt='Bantam Pékin'><label>Bantam Pékin</label><div class='qty'><input id='bantam' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Hollandaise Huppée.jpg' alt='Hollandaise Huppée'><label>Hollandaise Huppée</label><div class='qty'><input id='hollandaise' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Padoue.jpg' alt='Padoue'><label>Padoue</label><div class='qty'><input id='padoue' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Sabelpoot.jpg' alt='Sabelpoot'><label>Sabelpoot</label><div class='qty'><input id='sabelpoot' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='Nagasaki.jpg' alt='Nagasaki'><label>Nagasaki</label><div class='qty'><input id='nagasaki' type='number' min='0' value='0'></div></div>
-    <div class='card'><img src='wyandotte.jpg' alt='Wyandotte'><label>Wyandotte</label><div class='qty'><input id='wyandotte' type='number' min='0' value='0'></div></div>
+  <summary>Poules Naines <span class="chevron">▶</span></summary>
+  <div class="grid">
+
+    <div class="card">
+      <img src="Soie.jpg" alt="Poule Soie">
+      <label>Poule Soie</label>
+      <div class="qty"><input id="soie" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Bantam Pékin.jpg" alt="Bantam Pékin">
+      <label>Bantam Pékin</label>
+      <div class="qty"><input id="bantam" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Hollandaise Huppée.jpg" alt="Hollandaise Huppée">
+      <label>Hollandaise Huppée</label>
+      <div class="qty"><input id="hollandaise" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Padoue.jpg" alt="Padoue">
+      <label>Padoue</label>
+      <div class="qty"><input id="padoue" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Sabelpoot.jpg" alt="Sabelpoot">
+      <label>Sabelpoot</label>
+      <div class="qty"><input id="sabelpoot" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="Nagasaki.jpg" alt="Nagasaki">
+      <label>Nagasaki</label>
+      <div class="qty"><input id="nagasaki" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <img src="wyandotte.jpg" alt="Wyandotte">
+      <label>Wyandotte</label>
+      <div class="qty"><input id="wyandotte" type="number" min="0" value="0"></div>
+    </div>
+
   </div>
 </details>
-<div class='actions'>
-  <button onclick='genererEmail()'>Valider ma commande</button><br>
-  <button class='secondary' onclick='reinitialiserForm()'>Réinitialiser</button>
-</div>
-</div>
+
+<!-- FIN BLOC 3 -->
+<!-- DEBUT BLOC ACTIONS --> 
+
+<div class="actions"> 
+  <button onclick="genererEmail()"> Valider ma commande</button> <br> 
+  <button class="secondary" onclick="reinitialiserForm()"> Réinitialiser</button> 
+</div> 
+
+<!-- FIN BLOC ACTIONS --> 
+<!-- DEBUT BLOC 4 -->
+
 <script>
-function genererEmail(){
- const nom=document.getElementById('nom').value.trim();
- const adresse=document.getElementById('adresse').value.trim();
- const tel=document.getElementById('telephone').value.trim();
- if(!nom||!adresse||!tel){alert('Merci de remplir Nom, Adresse et Téléphone.');return;}
- const volailles=[["Poule rouge","poule_rouge"],["Poule noire","poule_noire"],["Coucou","coucou"],["Sussex","sussex"],["Faverolle","faverolle"],["Houdan","houdan"],["Araucana","araucana"],["Brahma","brahma"],["Gauloise grise","gauloise"],["Vorwerk","vorwerk"],["Cendrée","cendree"],["Noirans","noirans"],["Azur","azur"],["Leghorn","leghorn"],["Poule Soie","soie"],["Bantam Pékin","bantam"],["Hollandaise Huppée","hollandaise"],["Padoue","padoue"],["Sabelpoot","sabelpoot"],["Nagasaki","nagasaki"],["Wyandotte","wyandotte"]];
- let commande="";volailles.forEach(([n,id])=>{const q=Number(document.getElementById(id).value);if(q>0)commande+=`- ${n} : ${q}
-`;});
- if(!commande.trim()){alert('Merci d’indiquer au moins une quantité.');return;}
- const body=`Bonjour,
+
+function genererEmail() {
+
+    const nom = document.getElementById('nom').value.trim();
+    const adresse = document.getElementById('adresse').value.trim();
+    const tel = document.getElementById('telephone').value.trim();
+
+    // Vérification infos obligatoires
+    if (!nom || !adresse || !tel) {
+        alert('Merci de remplir Nom, Adresse et Téléphone.');
+        return;
+    }
+
+    // Vérification date obligatoire
+    const dateEl = document.querySelector("input[name='date']:checked");
+    if (!dateEl) {
+        alert("Merci de choisir une date de livraison.");
+        return;
+    }
+    const dateChoisie = dateEl.value;
+
+    // Liste des volailles
+    const volailles = [
+        ["Poule rouge","poule_rouge"],
+        ["Poule noire","poule_noire"],
+        ["Coucou","coucou"],
+        ["Sussex","sussex"],
+        ["Faverolle","faverolle"],
+        ["Houdan","houdan"],
+        ["Araucana","araucana"],
+        ["Brahma","brahma"],
+        ["Gauloise grise","gauloise"],
+        ["Vorwerk","vorwerk"],
+        ["Cendrée","cendree"],
+        ["Noirans","noirans"],
+        ["Azur","azur"],
+        ["Leghorn","leghorn"],
+        ["Poule Soie","soie"],
+        ["Bantam Pékin","bantam"],
+        ["Hollandaise Huppée","hollandaise"],
+        ["Padoue","padoue"],
+        ["Sabelpoot","sabelpoot"],
+        ["Nagasaki","nagasaki"],
+        ["Wyandotte","wyandotte"]
+    ];
+
+    let commande = "";
+    volailles.forEach(([nomV, id]) => {
+        const q = Number(document.getElementById(id).value);
+        if (q > 0) commande += `- ${nomV} : ${q}\n`;
+    });
+
+    if (!commande.trim()) {
+        alert("Merci d’indiquer au moins une quantité.");
+        return;
+    }
+
+    // Corps de l’email
+    const body = `Bonjour,
 
 Voici ma commande :
 
@@ -101,11 +436,43 @@ Nom : ${nom}
 Adresse : ${adresse}
 Téléphone : ${tel}
 
+Date de livraison choisie : ${dateChoisie}
+
 Commande :
-${commande}Merci.`;
- const mail="mailto:silo.pacy-appros@soufflet.com"+"?subject="+encodeURIComponent('Commande de volailles')+"&body="+encodeURIComponent(body);
- window.location.href=mail;}
-function reinitialiserForm(){document.getElementById('nom').value='';document.getElementById('adresse').value='';document.getElementById('telephone').value='';document.querySelectorAll("input[type='number']").forEach(i=>i.value=0);window.scrollTo({top:0,behavior:'smooth'});}
+${commande}
+Merci.`;
+
+    const mailto =
+        "mailto:silo.pacy-appros@soufflet.com"
+        + "?subject=" + encodeURIComponent("Commande de volailles")
+        + "&body=" + encodeURIComponent(body);
+
+    window.location.href = mailto;
+}
+
+function reinitialiserForm() {
+
+    document.getElementById('nom').value = '';
+    document.getElementById('adresse').value = '';
+    document.getElementById('telephone').value = '';
+
+    // Reset quantités
+    document.querySelectorAll("input[type='number']").forEach(inp => inp.value = 0);
+
+    // Reset date
+    document.querySelectorAll("input[name='date']").forEach(r => r.checked = false);
+
+    window.scrollTo({top:0, behavior:'smooth'});
+}
+
 </script>
+
+<!-- FIN BLOC 4 -->
+<!-- DEBUT BLOC 5 -->
+
+</div>  <!-- fin .container -->
+
 </body>
 </html>
+
+<!-- FIN BLOC 5 -->
