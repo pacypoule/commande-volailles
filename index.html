@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Commande de volailles</title>
+<title>Catalogue des volailles</title>
 
 <style>
 
@@ -185,7 +185,7 @@ button:hover{
 
 <body>
 
-<header>Commande de volailles</header>
+<header>Catalogue des volailles</header>
 
 <div class="container">
 <!-- FIN BLOC 1 -->
@@ -372,7 +372,7 @@ button:hover{
 <!-- DEBUT BLOC ACTIONS --> 
 
 <div class="actions"> 
-  <button onclick="genererEmail()"> Valider ma commande</button> <br> 
+  <button onclick="genererEmail()"> Demander un devis</button> <br> 
   <button class="secondary" onclick="reinitialiserForm()"> Réinitialiser</button> 
 </div> 
 
@@ -466,13 +466,14 @@ function genererEmail() {
     // Corps de l’email
     const body = `Bonjour,
 
-Voici ma commande :
 
 Nom : ${nom}
 Adresse : ${adresse}
 Téléphone : ${tel}
 
 Date de livraison choisie : ${dateChoisie}
+
+Pouvez-vous m’indiquer les tarifs pour ces volailles ? 
 
 Commande :
 ${commande}
