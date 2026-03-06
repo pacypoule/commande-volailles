@@ -194,9 +194,24 @@ button:hover{
 <h2>Vos informations</h2>
 
 <div class="info">
+
+    <select id="civilite">
+        <option value="">Civilité *</option>
+        <option value="Monsieur">Monsieur</option>
+        <option value="Madame">Madame</option>
+        <option value="Mademoiselle">Mademoiselle</option>
+    </select>
+
+    <input type="text" id="prenom" placeholder="Prénom *">
+
     <input type="text" id="nom" placeholder="Nom *">
     <input type="text" id="adresse" placeholder="Adresse *">
+
+    <input type="text" id="cp" placeholder="Code Postal *">
+    <input type="text" id="commune" placeholder="Commune *">
+
     <input type="text" id="telephone" placeholder="Téléphone *">
+
 </div>
 
 <h2>Choisissez votre date de livraison</h2>
@@ -413,11 +428,22 @@ function genererEmail() {
     const adresse = document.getElementById('adresse').value.trim();
     const tel = document.getElementById('telephone').value.trim();
 
+const civilite = document.getElementById('civilite').value.trim();
+const prenom = document.getElementById('prenom').value.trim();
+const cp = document.getElementById('cp').value.trim();
+const commune = document.getElementById('commune').value.trim();
+
     // Vérification infos obligatoires
     if (!nom || !adresse || !tel) {
         alert('Merci de remplir Nom, Adresse et Téléphone.');
         return;
     }
+
+if (!civilite || !prenom || !cp || !commune) {
+    alert("Merci de remplir tous les champs obligatoires.");
+    return;
+}
+
 
     // Vérification date obligatoire
     const dateEl = document.querySelector("input[name='date']:checked");
@@ -467,8 +493,13 @@ function genererEmail() {
     const body = `Bonjour,
 
 
+
+Civilité : ${civilite}
+Prénom : ${prenom}
 Nom : ${nom}
 Adresse : ${adresse}
+Code Postal : ${cp}
+Commune : ${commune}
 Téléphone : ${tel}
 
 Date de livraison choisie : ${dateChoisie}
