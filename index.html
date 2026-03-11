@@ -382,6 +382,73 @@ button:hover{
   </div>
 </details>
 
+<!-- ===================== VOLAILLES FERMIÈRES ===================== -->
+<details>
+  <summary>Volailles Fermières <span class="chevron">▶</span></summary>
+  <div class="grid">
+
+    <!-- LIGNE 1 — LES 4 COQS -->
+    <div class="card">
+      <label>Coq Adulte 20 semaines</label>
+      <div class="qty"><input id="coq_adulte_20s" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <label>Coq Blanc 5 semaines</label>
+      <div class="qty"><input id="coq_blanc_5s" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <label>Coq Rouge 5 semaines</label>
+      <div class="qty"><input id="coq_rouge_5s" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <label>Coq Cou-nu 5 semaines</label>
+      <div class="qty"><input id="coq_counu_5s" type="number" min="0" value="0"></div>
+    </div>
+
+    <!-- LIGNE 2 — LES 3 POULETS -->
+    <div class="card">
+      <label>Poulet Blanc 5 semaines</label>
+      <div class="qty"><input id="poulet_blanc_5s" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <label>Poulet Cou-nu 5 semaines</label>
+      <div class="qty"><input id="poulet_counu_5s" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <label>Poulet Rouge 5 semaines</label>
+      <div class="qty"><input id="poulet_rouge_5s" type="number" min="0" value="0"></div>
+    </div>
+
+    <!-- LIGNE 3 — PINTADES + OIES + CANARD -->
+    <div class="card">
+      <label>Pintades 6 semaines</label>
+      <div class="qty"><input id="pintades_6s" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <label>Oie Blanche 3 semaines</label>
+      <div class="qty"><input id="oie_blanche_3s" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <label>Oie Grise 3 semaines</label>
+      <div class="qty"><input id="oie_grise_3s" type="number" min="0" value="0"></div>
+    </div>
+
+    <div class="card">
+      <label>Canard de Barbarie 4 semaines</label>
+      <div class="qty"><input id="barbarie_4s" type="number" min="0" value="0"></div>
+    </div>
+
+  </div>
+</details>
+``
+
 <!-- FIN BLOC 3 -->
 
 <!-- DEBUT BLOC ACTIONS --> 
@@ -475,7 +542,18 @@ if (!civilite || !prenom || !cp || !commune) {
         ["Padoue","padoue"],
         ["Sabelpoot","sabelpoot"],
         ["Nagasaki","nagasaki"],
-        ["Wyandotte","wyandotte"]
+        ["Wyandotte","wyandotte"],
+["Poulet Blanc 5 semaines","poulet_blanc_5s"],
+["Poulet Cou-nu 5 semaines","poulet_counu_5s"],
+["Poulet Rouge 5 semaines","poulet_rouge_5s"],
+["Coq Adulte 20 semaines","coq_adulte_20s"],
+["Coq Blanc 5 semaines","coq_blanc_5s"],
+["Coq Rouge 5 semaines","coq_rouge_5s"],
+["Coq Cou-nu 5 semaines","coq_counu_5s"],
+["Pintades 6 semaines","pintades_6s"],
+["Canard de Barbarie 4 semaines","barbarie_4s"],
+["Oie Blanche 3 semaines","oie_blanche_3s"],
+["Oie Grise 3 semaines","oie_grise_3s"]
     ];
 
     let commande = "";
