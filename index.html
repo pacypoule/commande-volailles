@@ -43,6 +43,7 @@ summary{padding:16px; font-size:18px; font-weight:700; cursor:pointer; border-le
 @media(max-width:700px){ .contact-images{grid-template-columns:1fr} }
 </style>
 
+
 <script>
 function ouvrirDevis(){
   document.getElementById('zone-devis').style.display='block';
@@ -50,25 +51,33 @@ function ouvrirDevis(){
 }
 
 // Désactivation automatique des dates expirées
-function desactiverDates(){
-  const today = new Date();
-  const deadlines = [
-    { val: '17 mars', limit: '2026-02-24' },
-    { val: '31 mars', limit: '2026-03-11' },
-    { val: '12 mai',  limit: '2026-04-22' },
-    { val: '09 juin', limit: '2026-05-20' },
-    { val: '23 juin', limit: '2026-06-04' },
-    { val: '01 septembre', limit: '2026-08-12' }
-  ];
-  deadlines.forEach(d=>{
-    const inp = document.querySelector("input[name='date'][value='"+d.val+"']");
-    if(!inp) return;
-    const lim = new Date(d.limit);
-    if(today > lim){
-      inp.disabled = true;
-      const lab = inp.parentElement; if(lab){ lab.classList.add('disabled-date'); lab.innerHTML += ' (commande clôturée)'; }
-    }
-  })
+
+async function chargerDates() {
+  const zone = document.getElementById("dates-json");
+  zone.innerHTML = "Chargement des dates...";
+
+  try {
+    const r = await fetch("dates.json");
+    const data = await r.json();
+    const today = new Date();
+
+    zone.innerHTML = "";
+
+    data.dates.forEach(d => {
+      const lim = new Date(d.limit);
+      const expire = today > lim;
+
+      zone.innerHTML += `
+        <label class="${expire ? 'disabled-date' : ''}">
+          <input type="radio" name="date" value="${d.label}" ${expire ? "disabled" : ""}>
+          ${d.label} ${expire ? "(commande clôturée)" : ""}
+        </label>
+      `;
+    });
+
+  } catch (e) {
+    zone.innerHTML = "Erreur : impossible de charger les dates.";
+  }
 }
 
 function genererEmail(){
@@ -139,7 +148,7 @@ function reinitialiserForm(){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-document.addEventListener('DOMContentLoaded', desactiverDates);
+document.addEventListener("DOMContentLoaded", chargerDates);
 </script>
 </head>
 <body>
@@ -220,12 +229,7 @@ document.addEventListener('DOMContentLoaded', desactiverDates);
 
   <h2>Choisissez votre date de livraison</h2>
   <div class="dates">
-    <label><input type="radio" name="date" value="17 mars"> 17 mars</label><br>
-    <label><input type="radio" name="date" value="31 mars"> 31 mars</label><br>
-    <label><input type="radio" name="date" value="12 mai"> 12 mai</label><br>
-    <label><input type="radio" name="date" value="09 juin"> 09 juin</label><br>
-    <label><input type="radio" name="date" value="23 juin"> 23 juin</label><br>
-    <label><input type="radio" name="date" value="01 septembre"> 01 septembre</label><br>
+    <div id="dates-json">Chargement des dates…</div>
   </div>
 
   <h2>Quantités souhaitées</h2>
@@ -281,3 +285,4 @@ document.addEventListener('DOMContentLoaded', desactiverDates);
 </div>
 </body>
 </html>
+
