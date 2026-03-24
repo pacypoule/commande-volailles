@@ -1,673 +1,119 @@
-<!-- DEBUT BLOC 1 -->
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catalogue des volailles</title>
-
 <style>
-
 :root{
-    --green:#2f855a;
-    --green-dark:#276749;
-    --bg:#f4f6f9;
-    --text:#333;
-    --card:#fff;
+  --green:#2f855a; --green-dark:#276749; --bg:#f4f6f9; --card:#fff; --text:#333;
 }
+body{font-family:Arial, Helvetica, sans-serif; background:var(--bg); color:var(--text); margin:0}
+header{background:var(--green); color:#fff; text-align:center; padding:20px; font-size:28px; font-weight:700}
+.container{width:92%; max-width:1200px; margin:20px auto}
+/* Accordéons */
+details{background:#fff; border-radius:12px; margin-top:16px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,.08)}
+summary{padding:16px; font-size:18px; font-weight:700; cursor:pointer; border-left:6px solid var(--green)}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:16px}
+.card{background:#fff; border-radius:10px; padding:10px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.card img{width:100%; height:200px; object-fit:contain; background:#eee; border-radius:10px}
+.card label{display:block; margin:8px 0; font-weight:700}
+.qty input[type=number]{width:90px; padding:6px; border:2px solid var(--green); border-radius:8px; text-align:center}
+.btn{display:block; margin:28px auto; padding:14px 22px; background:var(--green); color:#fff; border:none; border-radius:10px; font-size:17px; font-weight:700; cursor:pointer}
+.btn.secondary{background:#fff; color:var(--green); border:2px solid var(--green)}
+.btn:hover{background:var(--green-dark)}
 
-*{ box-sizing:border-box; }
-
-body{
-    font-family:"Segoe UI",Arial,sans-serif;
-    margin:0;
-    padding:0;
-    background:var(--bg);
-    color:var(--text);
-}
-
-header{
-    background:var(--green);
-    color:#fff;
-    padding:22px 16px;
-    text-align:center;
-    font-size:28px;
-    font-weight:700;
-}
-
-.container{
-    width:92%;
-    max-width:1200px;
-    margin:24px auto 40px;
-}
-
-h2{
-    margin:28px 0 10px;
-    color:var(--green);
-    font-size:22px;
-}
-
-/* Infos client */
-.info{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-.info input{
-    padding:10px 12px;
-    border:2px solid var(--green);
-    border-radius:8px;
-    font-size:16px;
-    background:#fff;
-}
-#telephone{
-    grid-column: span 2;
-}
-
-@media(max-width:640px){
-    .info{ grid-template-columns:1fr; }
-    #telephone{ grid-column: span 1; }
-}
+/* Zone devis */
+#zone-devis{display:none; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,.08); margin-top:30px}
+.info{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.info select, .info input{padding:10px 12px; border:2px solid var(--green); border-radius:8px; font-size:16px}
+#telephone{grid-column: span 2}
+@media(max-width:640px){ .info{grid-template-columns:1fr} #telephone{grid-column: span 1} }
 
 /* Dates */
-.dates{
-    padding:10px 0 20px 0;
-    font-size:17px;
-    line-height:28px;
-}
-.dates label{ cursor:pointer; }
+.dates{padding:10px 0 10px; font-size:17px; line-height:28px}
+.disabled-date{color:#999; opacity:.6}
+.disabled-date input{pointer-events:none}
 
-/* Accordéons */
-details{
-    background:#fff;
-    border-radius:12px;
-    margin-top:16px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-    overflow:hidden;
-}
-summary{
-    list-style:none;
-    cursor:pointer;
-    padding:16px 18px;
-    font-weight:700;
-    font-size:18px;
-    color:#1f2d24;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    background:#fff;
-    border-left:6px solid var(--green);
-}
-summary::marker{ display:none; }
-.chevron{
-    margin-left:auto;
-    transition:transform .2s ease;
-}
-details[open] .chevron{
-    transform:rotate(90deg);
-}
-
-/* Grille volailles */
-.grid{
-    padding:14px 16px 18px;
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-    gap:20px;
-    background:#fff;
-}
-.card{
-    background:#fff;
-    padding:14px;
-    border-radius:12px;
-    text-align:center;
-    box-shadow:0 4px 12px rgba(0,0,0,.06);
-}
-.card img{
-    width:100%;
-    height:230px;
-    object-fit:contain;
-    background:#e9e9e9;
-    border-radius:10px;
-    margin-bottom:10px;
-}
-.card label{
-    font-size:16px;
-    font-weight:700;
-    margin-bottom:6px;
-    display:block;
-}
-.qty input{
-    width:84px;
-    padding:6px;
-    font-size:16px;
-    border:2px solid var(--green);
-    border-radius:8px;
-    text-align:center;
-}
-
-/* Boutons */
-.actions{
-    margin-top:28px;
-    text-align:center;
-}
-button{
-    background:var(--green);
-    color:#fff;
-    border:none;
-    padding:14px 22px;
-    font-size:17px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:700;
-    min-width:240px;
-    margin-bottom:10px;
-}
-button:hover{
-    background:var(--green-dark);
-}
-.secondary{
-    background:#fff;
-    color:var(--green);
-    border:2px solid var(--green);
-}
-.disabled-date {
-  color: #999;
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.disabled-date input {
-  pointer-events: none;
-}
-.contact-section {
-    margin-top: 40px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.contact-section h2 {
-    color: var(--green);
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.contact-images {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin: 20px 0;
-}
-
-.contact-images img {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-}
-
-.contact-info {
-    font-size: 18px;
-    line-height: 28px;
-    text-align: center;
-}
-
-.contact-info a {
-    color: var(--green);
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.contact-info a:hover {
-    text-decoration: underline;
-}
-
-.contact-button {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.contact-button button {
-    background: var(--green);
-    color: #fff;
-    padding: 12px 22px;
-    border: none;
-    border-radius: 10px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.contact-button button:hover {
-    background: var(--green-dark);
-}
-
-@media(max-width: 700px) {
-    .contact-images {
-        grid-template-columns: 1fr;
-    }
-}
+/* Contact */
+.contact-section{background:#fff; border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,.08); margin-top:30px}
+.contact-images{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:12px 0}
+.contact-images img{width:100%; border-radius:12px; box-shadow:0 3px 10px rgba(0,0,0,.12)}
+@media(max-width:700px){ .contact-images{grid-template-columns:1fr} }
 </style>
-</head>
-<img src="soufflet-logo.png" style="width: 60%; max-width: 220 px; display: block; margin:0 auto;">
-<body>
-
-<header>Catalogue des volailles</header>
-
-<div class="container">
-<!-- FIN BLOC 1 -->
-<!-- DEBUT BLOC 2 -->
-
-<h2>Vos informations</h2>
-
-<div class="info">
-
-    <select id="civilite">
-        <option value="">Civilité *</option>
-        <option value="Monsieur">Monsieur</option>
-        <option value="Madame">Madame</option>
-        <option value="Mademoiselle">Mademoiselle</option>
-    </select>
-
-    <input type="text" id="prenom" placeholder="Prénom *">
-
-    <input type="text" id="nom" placeholder="Nom *">
-    <input type="text" id="adresse" placeholder="Adresse *">
-
-    <input type="text" id="cp" placeholder="Code Postal *">
-    <input type="text" id="commune" placeholder="Commune *">
-
-    <input type="text" id="telephone" placeholder="Téléphone *">
-
-</div>
-
-<h2>Choisissez votre date de livraison</h2>
-
-<div class="dates">
-    <label><input type="radio" name="date" value="17 mars"> 17 mars</label><br>
-    <label><input type="radio" name="date" value="31 mars"> 31 mars</label><br>
-    <label><input type="radio" name="date" value="12 mai"> 12 mai</label><br>
-    <label><input type="radio" name="date" value="09 juin"> 09 juin</label><br>
-    <label><input type="radio" name="date" value="23 juin"> 23 juin</label><br>
-    <label><input type="radio" name="date" value="01 septembre"> 01 septembre</label><br>
-</div>
-
-<h2>Nos volailles</h2>
-
-<!-- FIN BLOC 2 -->
-<!-- DEBUT BLOC 3 -->
-
-<!-- ===================== GRANDES RACES ===================== -->
-<details>
-  <summary>Poules de Grande Race <span class="chevron">▶</span></summary>
-  <div class="grid">
-
-    <div class="card">
-      <img src="Poule rouge.jpg" alt="Poule rouge">
-      <label>Poule rouge</label>
-      <div class="qty"><input id="poule_rouge" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Poule noire.jpg" alt="Poule noire">
-      <label>Poule noire</label>
-      <div class="qty"><input id="poule_noire" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Coucou.jpg" alt="Coucou">
-      <label>Coucou</label>
-      <div class="qty"><input id="coucou" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Sussex.jpg" alt="Sussex">
-      <label>Sussex</label>
-      <div class="qty"><input id="sussex" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Faverolle.jpg" alt="Faverolle">
-      <label>Faverolle</label>
-      <div class="qty"><input id="faverolle" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Houdan.jpg" alt="Houdan">
-      <label>Houdan</label>
-      <div class="qty"><input id="houdan" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Araucana.jpg" alt="Araucana">
-      <label>Araucana</label>
-      <div class="qty"><input id="araucana" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Brahma.jpg" alt="Brahma">
-      <label>Brahma</label>
-      <div class="qty"><input id="brahma" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Gauloise grise.jpg" alt="Gauloise grise">
-      <label>Gauloise grise</label>
-      <div class="qty"><input id="gauloise" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="vorwek.jpg" alt="Vorwerk">
-      <label>Vorwerk</label>
-      <div class="qty"><input id="vorwerk" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Cendrée.jpg" alt="Cendrée">
-      <label>Cendrée</label>
-      <div class="qty"><input id="cendree" type="number" min="0" value="0"></div>
-    </div>
-
-  </div>
-</details>
-
-
-<!-- ===================== RACES HYBRIDES ===================== -->
-<details>
-  <summary>Poules Hybrides <span class="chevron">▶</span></summary>
-  <div class="grid">
-
-    <div class="card">
-      <img src="Noirans.jpg" alt="Noirans">
-      <label>Noirans</label>
-      <div class="qty"><input id="noirans" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Azur.jpg" alt="Azur">
-      <label>Azur</label>
-      <div class="qty"><input id="azur" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Leghorn.jpg" alt="Leghorn">
-      <label>Leghorn</label>
-      <div class="qty"><input id="leghorn" type="number" min="0" value="0"></div>
-    </div>
-
-  </div>
-</details>
-
-
-<!-- ===================== RACES NAINES ===================== -->
-<details>
-  <summary>Poules Naines <span class="chevron">▶</span></summary>
-  <div class="grid">
-
-    <div class="card">
-      <img src="Soie.jpg" alt="Poule Soie">
-      <label>Poule Soie</label>
-      <div class="qty"><input id="soie" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Bantam Pékin.jpg" alt="Bantam Pékin">
-      <label>Bantam Pékin</label>
-      <div class="qty"><input id="bantam" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Hollandaise Huppée.jpg" alt="Hollandaise Huppée">
-      <label>Hollandaise Huppée</label>
-      <div class="qty"><input id="hollandaise" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Padoue.jpg" alt="Padoue">
-      <label>Padoue</label>
-      <div class="qty"><input id="padoue" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Sabelpoot.jpg" alt="Sabelpoot">
-      <label>Sabelpoot</label>
-      <div class="qty"><input id="sabelpoot" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="Nagasaki.jpg" alt="Nagasaki">
-      <label>Nagasaki</label>
-      <div class="qty"><input id="nagasaki" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <img src="wyandotte.jpg" alt="Wyandotte">
-      <label>Wyandotte</label>
-      <div class="qty"><input id="wyandotte" type="number" min="0" value="0"></div>
-    </div>
-
-  </div>
-</details>
-
-<!-- ===================== VOLAILLES FERMIÈRES ===================== -->
-<details>
-  <summary>Volailles Fermières <span class="chevron">▶</span></summary>
-  <div class="grid">
-
-    <!-- LIGNE 1 — LES 4 COQS -->
-    <div class="card">
-      <label>Coq Adulte 20 semaines</label>
-      <div class="qty"><input id="coq_adulte_20s" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <label>Coq Blanc 5 semaines</label>
-      <div class="qty"><input id="coq_blanc_5s" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <label>Coq Rouge 5 semaines</label>
-      <div class="qty"><input id="coq_rouge_5s" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <label>Coq Cou-nu 5 semaines</label>
-      <div class="qty"><input id="coq_counu_5s" type="number" min="0" value="0"></div>
-    </div>
-
-    <!-- LIGNE 2 — LES 3 POULETS -->
-    <div class="card">
-      <label>Poulet Blanc 5 semaines</label>
-      <div class="qty"><input id="poulet_blanc_5s" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <label>Poulet Cou-nu 5 semaines</label>
-      <div class="qty"><input id="poulet_counu_5s" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <label>Poulet Rouge 5 semaines</label>
-      <div class="qty"><input id="poulet_rouge_5s" type="number" min="0" value="0"></div>
-    </div>
-
-    <!-- LIGNE 3 — PINTADES + OIES + CANARD -->
-    <div class="card">
-      <label>Pintades 6 semaines</label>
-      <div class="qty"><input id="pintades_6s" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <label>Oie Blanche 3 semaines</label>
-      <div class="qty"><input id="oie_blanche_3s" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <label>Oie Grise 3 semaines</label>
-      <div class="qty"><input id="oie_grise_3s" type="number" min="0" value="0"></div>
-    </div>
-
-    <div class="card">
-      <label>Canard de Barbarie 4 semaines</label>
-      <div class="qty"><input id="barbarie_4s" type="number" min="0" value="0"></div>
-    </div>
-
-  </div>
-</details>
-
-
-<!-- FIN BLOC 3 -->
-
-<!-- DEBUT BLOC ACTIONS --> 
-
-<div class="actions"> 
-  <button onclick="genererEmail()"> Demander un devis</button> <br> 
-  <button class="secondary" onclick="reinitialiserForm()"> Réinitialiser</button> 
-</div> 
-
-<!-- FIN BLOC ACTIONS --> 
-<!-- SECTION CONTACT -->
-<div class="contact-section">
-
-    <h2>Nous contacter</h2>
-
-    <div class="contact-images">
-        <!-- Photo du magasin -->
-        
-<img src="magasin.jpg" alt="Magasin">
-        <!-- Capture Google Maps -->
-       <img src="plan-google.jpg" alt="Maps">
-    </div>
-
-    <div class="contact-info">
-        <p><strong>Adresse :</strong><br>
-        SOUFFLET AGRICULTURE – D905<br>
-        89160 PACY-SUR-ARMANÇON</p>
-
-        <p><strong>Téléphone :</strong><br>
-        03 86 75 68 27</p>
-
-        <p><strong>Email :</strong><br>
-        silo.pacy-appros@soufflet.com          
-       </p>
-    </div>
-
-    
-    </div>
-
-</div>
-<!-- FIN SECTION CONTACT -->
-<!-- DEBUT BLOC 4 -->
 
 <script>
-<!-- Désactivation automatique des dates expirées -->
-const today = new Date();
-
-// Liste des dates limites
-const deadlines = [
-  { date: "17 mars", limit: "2026-02-24" },
-  { date: "31 mars", limit: "2026-03-11" },
-  { date: "12 mai", limit: "2026-04-22" },
-  { date: "09 juin", limit: "2026-05-20" },
-  { date: "23 juin", limit: "2026-06-04" },
-  { date: "01 septembre", limit: "2026-08-12" }
-];
-
-// Fonction de désactivation
-deadlines.forEach(item => {
-    const limitDate = new Date(item.limit);
-    if (today > limitDate) {
-        const input = document.querySelector(
-            'input[name="date"][value="' + item.date + '"]'
-        );
-        if (input) {
-            input.disabled = true;
-            input.parentNode.classList.add("disabled-date");
-            input.parentNode.innerHTML += " (commande clôturée)";
-        }
-    }
-});
-function genererEmail() {
-
-    const nom = document.getElementById('nom').value.trim();
-    const adresse = document.getElementById('adresse').value.trim();
-    const tel = document.getElementById('telephone').value.trim();
-
-const civilite = document.getElementById('civilite').value.trim();
-const prenom = document.getElementById('prenom').value.trim();
-const cp = document.getElementById('cp').value.trim();
-const commune = document.getElementById('commune').value.trim();
-
-    // Vérification infos obligatoires
-    if (!nom || !adresse || !tel) {
-        alert('Merci de remplir Nom, Adresse et Téléphone.');
-        return;
-    }
-
-if (!civilite || !prenom || !cp || !commune) {
-    alert("Merci de remplir tous les champs obligatoires.");
-    return;
+function ouvrirDevis(){
+  document.getElementById('zone-devis').style.display='block';
+  window.scrollTo({top:document.getElementById('zone-devis').offsetTop, behavior:'smooth'});
 }
 
-
-    // Vérification date obligatoire
-    const dateEl = document.querySelector("input[name='date']:checked");
-    if (!dateEl) {
-        alert("Merci de choisir une date de livraison.");
-        return;
+// Désactivation automatique des dates expirées
+function desactiverDates(){
+  const today = new Date();
+  const deadlines = [
+    { val: '17 mars', limit: '2026-02-24' },
+    { val: '31 mars', limit: '2026-03-11' },
+    { val: '12 mai',  limit: '2026-04-22' },
+    { val: '09 juin', limit: '2026-05-20' },
+    { val: '23 juin', limit: '2026-06-04' },
+    { val: '01 septembre', limit: '2026-08-12' }
+  ];
+  deadlines.forEach(d=>{
+    const inp = document.querySelector("input[name='date'][value='"+d.val+"']");
+    if(!inp) return;
+    const lim = new Date(d.limit);
+    if(today > lim){
+      inp.disabled = true;
+      const lab = inp.parentElement; if(lab){ lab.classList.add('disabled-date'); lab.innerHTML += ' (commande clôturée)'; }
     }
-    const dateChoisie = dateEl.value;
+  })
+}
 
-    // Liste des volailles
-    const volailles = [
-        ["Poule rouge","poule_rouge"],
-        ["Poule noire","poule_noire"],
-        ["Coucou","coucou"],
-        ["Sussex","sussex"],
-        ["Faverolle","faverolle"],
-        ["Houdan","houdan"],
-        ["Araucana","araucana"],
-        ["Brahma","brahma"],
-        ["Gauloise grise","gauloise"],
-        ["Vorwerk","vorwerk"],
-        ["Cendrée","cendree"],
-        ["Noirans","noirans"],
-        ["Azur","azur"],
-        ["Leghorn","leghorn"],
-        ["Poule Soie","soie"],
-        ["Bantam Pékin","bantam"],
-        ["Hollandaise Huppée","hollandaise"],
-        ["Padoue","padoue"],
-        ["Sabelpoot","sabelpoot"],
-        ["Nagasaki","nagasaki"],
-        ["Wyandotte","wyandotte"],
-["Poulet Blanc 5 semaines","poulet_blanc_5s"],
-["Poulet Cou-nu 5 semaines","poulet_counu_5s"],
-["Poulet Rouge 5 semaines","poulet_rouge_5s"],
-["Coq Adulte 20 semaines","coq_adulte_20s"],
-["Coq Blanc 5 semaines","coq_blanc_5s"],
-["Coq Rouge 5 semaines","coq_rouge_5s"],
-["Coq Cou-nu 5 semaines","coq_counu_5s"],
-["Pintades 6 semaines","pintades_6s"],
-["Canard de Barbarie 4 semaines","barbarie_4s"],
-["Oie Blanche 3 semaines","oie_blanche_3s"],
-["Oie Grise 3 semaines","oie_grise_3s"]
-    ];
+function genererEmail(){
+  const civilite = (document.getElementById('civilite')||{}).value?.trim()||'';
+  const prenom = (document.getElementById('prenom')||{}).value?.trim()||'';
+  const nom = (document.getElementById('nom')||{}).value?.trim()||'';
+  const adresse = (document.getElementById('adresse')||{}).value?.trim()||'';
+  const cp = (document.getElementById('cp')||{}).value?.trim()||'';
+  const commune = (document.getElementById('commune')||{}).value?.trim()||'';
+  const tel = (document.getElementById('telephone')||{}).value?.trim()||'';
 
-    let commande = "";
-    volailles.forEach(([nomV, id]) => {
-        const q = Number(document.getElementById(id).value);
-        if (q > 0) commande += `- ${nomV} : ${q}\n`;
-    });
+  if(!civilite || !prenom || !nom || !adresse || !cp || !commune || !tel){
+    alert('Merci de remplir tous les champs client.'); return;
+  }
+  const dateEl = document.querySelector("input[name='date']:checked");
+  if(!dateEl){ alert('Merci de choisir une date de livraison.'); return; }
+  const dateChoisie = dateEl.value;
 
-    if (!commande.trim()) {
-        alert("Merci d’indiquer au moins une quantité.");
-        return;
-    }
+  // Liste des volailles et IDs (zone quantités)
+  const items = [
+    ['Poule rouge','poule_rouge'],['Poule noire','poule_noire'],['Coucou','coucou'],['Sussex','sussex'],
+    ['Faverolle','faverolle'],['Houdan','houdan'],['Araucana','araucana'],['Brahma','brahma'],
+    ['Gauloise grise','gauloise'],['Vorwerk','vorwerk'],['Cendrée','cendree'],
+    ['Noirans','noirans'],['Azur','azur'],['Leghorn','leghorn'],
+    ['Poule Soie','soie'],['Bantam Pékin','bantam'],['Hollandaise Huppée','hollandaise'],['Padoue','padoue'],
+    ['Sabelpoot','sabelpoot'],['Nagasaki','nagasaki'],['Wyandotte','wyandotte'],
+    ['Coq Adulte 20 semaines','coq_adulte_20s'],['Coq Blanc 5 semaines','coq_blanc_5s'],['Coq Rouge 5 semaines','coq_rouge_5s'],['Coq Cou-nu 5 semaines','coq_counu_5s'],
+    ['Poulet Blanc 5 semaines','poulet_blanc_5s'],['Poulet Cou-nu 5 semaines','poulet_counu_5s'],['Poulet Rouge 5 semaines','poulet_rouge_5s'],
+    ['Pintades 6 semaines','pintades_6s'],['Oie Blanche 3 semaines','oie_blanche_3s'],['Oie Grise 3 semaines','oie_grise_3s'],['Canard de Barbarie 4 semaines','barbarie_4s']
+  ];
 
-    // Corps de l’email
-    const body = `Bonjour,
+  let commande = '';
+  items.forEach(([n, id])=>{
+    const el = document.getElementById(id);
+    const q = el ? Number(el.value||0) : 0;
+    if(q>0){ commande += `- ${n} : ${q}
+`; }
+  });
+  if(!commande.trim()){
+    alert("Merci d’indiquer au moins une quantité."); return;
+  }
 
+  const body = `Bonjour,
 
+Pouvez-vous m’indiquer les tarifs pour ces volailles ?
 
 Civilité : ${civilite}
 Prénom : ${prenom}
@@ -677,45 +123,161 @@ Code Postal : ${cp}
 Commune : ${commune}
 Téléphone : ${tel}
 
-Date de livraison choisie : ${dateChoisie}
+Date de livraison souhaitée : ${dateChoisie}
 
-Pouvez-vous m’indiquer les tarifs pour ces volailles ? 
-
-Commande :
+Liste des volailles demandées :
 ${commande}
 Merci.`;
-
-    const mailto =
-        "mailto:silo.pacy-appros@soufflet.com"
-        + "?subject=" + encodeURIComponent("Commande de volailles")
-        + "&body=" + encodeURIComponent(body);
-
-    window.location.href = mailto;
+  const mailto = 'mailto:silo.pacy-appros@soufflet.com?subject=' + encodeURIComponent('Demande de devis volailles') + '&body=' + encodeURIComponent(body);
+  window.location.href = mailto;
 }
 
-function reinitialiserForm() {
-
-    document.getElementById('nom').value = '';
-    document.getElementById('adresse').value = '';
-    document.getElementById('telephone').value = '';
-
-    // Reset quantités
-    document.querySelectorAll("input[type='number']").forEach(inp => inp.value = 0);
-
-    // Reset date
-    document.querySelectorAll("input[name='date']").forEach(r => r.checked = false);
-
-    window.scrollTo({top:0, behavior:'smooth'});
+function reinitialiserForm(){
+  ['civilite','prenom','nom','adresse','cp','commune','telephone'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
+  document.querySelectorAll("input[name='date']").forEach(r=>r.checked=false);
+  document.querySelectorAll("#zone-devis input[type='number']").forEach(inp=>inp.value=0);
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
+document.addEventListener('DOMContentLoaded', desactiverDates);
 </script>
+</head>
+<body>
+<img src="soufflet-logo.png" style="width:50%;max-width:220px;display:block;margin:20px auto" alt="Logo Soufflet Agriculture">
+<header>Catalogue des volailles</header>
+<div class="container">
 
-<!-- FIN BLOC 4 -->
-<!-- DEBUT BLOC 5 -->
+<h2>Nos volailles</h2>
+<!-- ===== ZONE HAUTE : Accordéons sans quantités ===== -->
+<details><summary>Poules de Grande Race</summary><div class="grid">
+  <div class="card"><img src="Poule rouge.jpg" alt="Poule rouge"><label>Poule rouge</label></div>
+  <div class="card"><img src="Poule noire.jpg" alt="Poule noire"><label>Poule noire</label></div>
+  <div class="card"><img src="Coucou.jpg" alt="Coucou"><label>Coucou</label></div>
+  <div class="card"><img src="Sussex.jpg" alt="Sussex"><label>Sussex</label></div>
+  <div class="card"><img src="Faverolle.jpg" alt="Faverolle"><label>Faverolle</label></div>
+  <div class="card"><img src="Houdan.jpg" alt="Houdan"><label>Houdan</label></div>
+  <div class="card"><img src="Araucana.jpg" alt="Araucana"><label>Araucana</label></div>
+  <div class="card"><img src="Brahma.jpg" alt="Brahma"><label>Brahma</label></div>
+  <div class="card"><img src="Gauloise grise.jpg" alt="Gauloise grise"><label>Gauloise grise</label></div>
+  <div class="card"><img src="vorwek.jpg" alt="Vorwerk"><label>Vorwerk</label></div>
+  <div class="card"><img src="Cendrée.jpg" alt="Cendrée"><label>Cendrée</label></div>
+</div></details>
 
-</div>  <!-- fin .container -->
+<details><summary>Poules Hybrides</summary><div class="grid">
+  <div class="card"><img src="Noirans.jpg" alt="Noirans"><label>Noirans</label></div>
+  <div class="card"><img src="Azur.jpg" alt="Azur"><label>Azur</label></div>
+  <div class="card"><img src="Leghorn.jpg" alt="Leghorn"><label>Leghorn</label></div>
+</div></details>
 
+<details><summary>Poules Naines</summary><div class="grid">
+  <div class="card"><img src="Soie.jpg" alt="Poule Soie"><label>Poule Soie</label></div>
+  <div class="card"><img src="Bantam Pékin.jpg" alt="Bantam Pékin"><label>Bantam Pékin</label></div>
+  <div class="card"><img src="Hollandaise Huppée.jpg" alt="Hollandaise Huppée"><label>Hollandaise Huppée</label></div>
+  <div class="card"><img src="Padoue.jpg" alt="Padoue"><label>Padoue</label></div>
+  <div class="card"><img src="Sabelpoot.jpg" alt="Sabelpoot"><label>Sabelpoot</label></div>
+  <div class="card"><img src="Nagasaki.jpg" alt="Nagasaki"><label>Nagasaki</label></div>
+  <div class="card"><img src="wyandotte.jpg" alt="Wyandotte"><label>Wyandotte</label></div>
+</div></details>
+
+<details><summary>Volailles Fermières</summary><div class="grid">
+  <div class="card"><img src="coq_adulte.jpg" alt="Coq Adulte 20 semaines"><label>Coq Adulte 20 semaines</label></div>
+  <div class="card"><img src="coq_blanc.jpg" alt="Coq Blanc 5 semaines"><label>Coq Blanc 5 semaines</label></div>
+  <div class="card"><img src="coq_rouge.jpg" alt="Coq Rouge 5 semaines"><label>Coq Rouge 5 semaines</label></div>
+  <div class="card"><img src="coq_counu.jpg" alt="Coq Cou-nu 5 semaines"><label>Coq Cou-nu 5 semaines</label></div>
+  <div class="card"><img src="poulet_blanc.jpg" alt="Poulet Blanc 5 semaines"><label>Poulet Blanc 5 semaines</label></div>
+  <div class="card"><img src="poulet_counu.jpg" alt="Poulet Cou-nu 5 semaines"><label>Poulet Cou-nu 5 semaines</label></div>
+  <div class="card"><img src="poulet_rouge.jpg" alt="Poulet Rouge 5 semaines"><label>Poulet Rouge 5 semaines</label></div>
+  <div class="card"><img src="pintades.jpg" alt="Pintades 6 semaines"><label>Pintades 6 semaines</label></div>
+  <div class="card"><img src="oie_blanche.jpg" alt="Oie Blanche 3 semaines"><label>Oie Blanche 3 semaines</label></div>
+  <div class="card"><img src="oie_grise.jpg" alt="Oie Grise 3 semaines"><label>Oie Grise 3 semaines</label></div>
+  <div class="card"><img src="barbarie.jpg" alt="Canard de Barbarie 4 semaines"><label>Canard de Barbarie 4 semaines</label></div>
+</div></details>
+
+<button class="btn" onclick="ouvrirDevis()">Demander un devis</button>
+
+<div class="contact-section">
+  <h2>Nous contacter</h2>
+  <div class="contact-images">
+    <img src="magasin.jpg" alt="Photo du magasin">
+    <img src="plan-google.jpg" alt="Plan d'accès">
+  </div>
+  <p><strong>Téléphone :</strong> 03 86 75 68 27</p>
+  <p><strong>Adresse :</strong> SOUFFLET AGRICULTURE – D905, 89160 PACY‑SUR‑ARMANÇON</p>
+</div>
+
+<!-- ===== ZONE DEVIS : Accordéons AVEC quantités + mail ===== -->
+<div id="zone-devis">
+  <h2>Vos informations</h2>
+  <div class="info">
+    <select id="civilite"><option value="">Civilité *</option><option>Monsieur</option><option>Madame</option><option>Mademoiselle</option></select>
+    <input id="prenom" placeholder="Prénom *">
+    <input id="nom" placeholder="Nom *">
+    <input id="adresse" placeholder="Adresse *">
+    <input id="cp" placeholder="Code Postal *">
+    <input id="commune" placeholder="Commune *">
+    <input id="telephone" placeholder="Téléphone *">
+  </div>
+
+  <h2>Choisissez votre date de livraison</h2>
+  <div class="dates">
+    <label><input type="radio" name="date" value="17 mars"> 17 mars</label><br>
+    <label><input type="radio" name="date" value="31 mars"> 31 mars</label><br>
+    <label><input type="radio" name="date" value="12 mai"> 12 mai</label><br>
+    <label><input type="radio" name="date" value="09 juin"> 09 juin</label><br>
+    <label><input type="radio" name="date" value="23 juin"> 23 juin</label><br>
+    <label><input type="radio" name="date" value="01 septembre"> 01 septembre</label><br>
+  </div>
+
+  <h2>Quantités souhaitées</h2>
+  <!-- Accordéons AVEC quantités -->
+  <details><summary>Poules de Grande Race</summary><div class="grid">
+    <div class="card"><img src="Poule rouge.jpg" alt="Poule rouge"><label>Poule rouge</label><div class="qty"><input id="poule_rouge" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Poule noire.jpg" alt="Poule noire"><label>Poule noire</label><div class="qty"><input id="poule_noire" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Coucou.jpg" alt="Coucou"><label>Coucou</label><div class="qty"><input id="coucou" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Sussex.jpg" alt="Sussex"><label>Sussex</label><div class="qty"><input id="sussex" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Faverolle.jpg" alt="Faverolle"><label>Faverolle</label><div class="qty"><input id="faverolle" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Houdan.jpg" alt="Houdan"><label>Houdan</label><div class="qty"><input id="houdan" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Araucana.jpg" alt="Araucana"><label>Araucana</label><div class="qty"><input id="araucana" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Brahma.jpg" alt="Brahma"><label>Brahma</label><div class="qty"><input id="brahma" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Gauloise grise.jpg" alt="Gauloise grise"><label>Gauloise grise</label><div class="qty"><input id="gauloise" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="vorwek.jpg" alt="Vorwerk"><label>Vorwerk</label><div class="qty"><input id="vorwerk" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Cendrée.jpg" alt="Cendrée"><label>Cendrée</label><div class="qty"><input id="cendree" type="number" min="0" value="0"></div></div>
+  </div></details>
+
+  <details><summary>Poules Hybrides</summary><div class="grid">
+    <div class="card"><img src="Noirans.jpg" alt="Noirans"><label>Noirans</label><div class="qty"><input id="noirans" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Azur.jpg" alt="Azur"><label>Azur</label><div class="qty"><input id="azur" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Leghorn.jpg" alt="Leghorn"><label>Leghorn</label><div class="qty"><input id="leghorn" type="number" min="0" value="0"></div></div>
+  </div></details>
+
+  <details><summary>Poules Naines</summary><div class="grid">
+    <div class="card"><img src="Soie.jpg" alt="Poule Soie"><label>Poule Soie</label><div class="qty"><input id="soie" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Bantam Pékin.jpg" alt="Bantam Pékin"><label>Bantam Pékin</label><div class="qty"><input id="bantam" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Hollandaise Huppée.jpg" alt="Hollandaise Huppée"><label>Hollandaise Huppée</label><div class="qty"><input id="hollandaise" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Padoue.jpg" alt="Padoue"><label>Padoue</label><div class="qty"><input id="padoue" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Sabelpoot.jpg" alt="Sabelpoot"><label>Sabelpoot</label><div class="qty"><input id="sabelpoot" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="Nagasaki.jpg" alt="Nagasaki"><label>Nagasaki</label><div class="qty"><input id="nagasaki" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="wyandotte.jpg" alt="Wyandotte"><label>Wyandotte</label><div class="qty"><input id="wyandotte" type="number" min="0" value="0"></div></div>
+  </div></details>
+
+  <details><summary>Volailles Fermières</summary><div class="grid">
+    <div class="card"><img src="coq_adulte.jpg" alt="Coq Adulte 20 semaines"><label>Coq Adulte 20 semaines</label><div class="qty"><input id="coq_adulte_20s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="coq_blanc.jpg" alt="Coq Blanc 5 semaines"><label>Coq Blanc 5 semaines</label><div class="qty"><input id="coq_blanc_5s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="coq_rouge.jpg" alt="Coq Rouge 5 semaines"><label>Coq Rouge 5 semaines</label><div class="qty"><input id="coq_rouge_5s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="coq_counu.jpg" alt="Coq Cou-nu 5 semaines"><label>Coq Cou-nu 5 semaines</label><div class="qty"><input id="coq_counu_5s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="poulet_blanc.jpg" alt="Poulet Blanc 5 semaines"><label>Poulet Blanc 5 semaines</label><div class="qty"><input id="poulet_blanc_5s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="poulet_counu.jpg" alt="Poulet Cou-nu 5 semaines"><label>Poulet Cou-nu 5 semaines</label><div class="qty"><input id="poulet_counu_5s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="poulet_rouge.jpg" alt="Poulet Rouge 5 semaines"><label>Poulet Rouge 5 semaines</label><div class="qty"><input id="poulet_rouge_5s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="pintades.jpg" alt="Pintades 6 semaines"><label>Pintades 6 semaines</label><div class="qty"><input id="pintades_6s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="oie_blanche.jpg" alt="Oie Blanche 3 semaines"><label>Oie Blanche 3 semaines</label><div class="qty"><input id="oie_blanche_3s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="oie_grise.jpg" alt="Oie Grise 3 semaines"><label>Oie Grise 3 semaines</label><div class="qty"><input id="oie_grise_3s" type="number" min="0" value="0"></div></div>
+    <div class="card"><img src="barbarie.jpg" alt="Canard de Barbarie 4 semaines"><label>Canard de Barbarie 4 semaines</label><div class="qty"><input id="barbarie_4s" type="number" min="0" value="0"></div></div>
+  </div></details>
+
+  <button class="btn" onclick="genererEmail()">Envoyer ma demande de devis</button>
+  <button class="btn secondary" onclick="reinitialiserForm()">Réinitialiser</button>
+</div>
+
+</div>
 </body>
 </html>
-
-<!-- FIN BLOC 5 -->
