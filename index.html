@@ -124,23 +124,26 @@ function genererEmail(){
     alert("Merci d’indiquer au moins une quantité."); return;
   }
 
-  const body = `Bonjour,
+ const body = `Bonjour,
 
-Pouvez-vous m’indiquer les tarifs pour ces volailles ?
+Informations client :
+- Civilité : ${civilite}
+- Prénom : ${prenom}
+- Nom : ${nom}
+- Adresse : ${adresse}
+- Code Postal : ${cp}
+- Commune : ${commune}
+- Téléphone : ${tel}
 
-Civilité : ${civilite}
-Prénom : ${prenom}
-Nom : ${nom}
-Adresse : ${adresse}
-Code Postal : ${cp}
-Commune : ${commune}
-Téléphone : ${tel}
+Date de livraison souhaitée :
+- ${dateChoisie}
 
-Date de livraison souhaitée : ${dateChoisie}
+Voici ma demande de devis.
 
 Liste des volailles demandées :
 ${commande}
-Merci.`;
+
+Merci d'avance pour votre retour.`;
   const mailto = 'mailto:silo.pacy-appros@soufflet.com?subject=' + encodeURIComponent('Demande de devis volailles') + '&body=' + encodeURIComponent(body);
   window.location.href = mailto;
 }
