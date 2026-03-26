@@ -85,19 +85,38 @@ async function chargerDates() {
 }
 
 function genererEmail(){
-  const civilite = (document.getElementById('civilite')||{}).value?.trim()||'';
-  const prenom = (document.getElementById('prenom')||{}).value?.trim()||'';
-  const nom = (document.getElementById('nom')||{}).value?.trim()||'';
-  const adresse = (document.getElementById('adresse')||{}).value?.trim()||'';
-  const cp = (document.getElementById('cp')||{}).value?.trim()||'';
-  const commune = (document.getElementById('commune')||{}).value?.trim()||'';
-  const tel = (document.getElementById('telephone')||{}).value?.trim()||'';
+  
+  // 🔔 Fenêtre de confirmation
+  const confirmation = confirm(
+    "Votre logiciel de messagerie va s’ouvrir.\n\n" +
+    "Vous devrez ensuite cliquer sur « Envoyer » dans votre boîte mail\n" +
+    "pour que votre demande de devis soit réellement transmise.\n\n" +
+    "Voulez-vous continuer ?"
+  );
+
+  if (!confirmation) {
+    return; // l’utilisateur a annulé → on arrête ici
+  }
+
+  const civilite = document.getElementById('civilite').value.trim();
+  const prenom = document.getElementById('prenom').value.trim();
+  const nom = document.getElementById('nom').value.trim();
+  const adresse = document.getElementById('adresse').value.trim();
+  const cp = document.getElementById('cp').value.trim();
+  const commune = document.getElementById('commune').value.trim();
+  const tel = document.getElementById('telephone').value.trim();
 
   if(!civilite || !prenom || !nom || !adresse || !cp || !commune || !tel){
-    alert('Merci de remplir tous les champs client.'); return;
+    alert('Merci de remplir tous les champs client.');
+    return;
   }
+
   const dateEl = document.querySelector("input[name='date']:checked");
-  if(!dateEl){ alert('Merci de choisir une date de livraison.'); return; }
+  if(!dateEl){
+    alert('Merci de choisir une date de livraison.');
+    return;
+  }
+
   const dateChoisie = dateEl.value;
 
   // Liste des volailles et IDs (zone quantités)
@@ -285,7 +304,7 @@ document.addEventListener("DOMContentLoaded", chargerDates);
     <div class="card"><img src="barbarie.jpg" alt="Canard de Barbarie 4 semaines"><label>Canard de Barbarie 4 semaines</label><div class="qty"><input id="barbarie_4s" type="number" min="0" value="0"></div></div>
   </div></details>
 
-  <button class="btn" onclick="genererEmail()">Envoyer ma demande de devis</button>
+  <button class="btn" onclick="genererEmail()">Générer mon email de demande de devis</button>
   <button class="btn secondary" onclick="reinitialiserForm()">Réinitialiser</button>
 </div>
 
