@@ -53,6 +53,20 @@ function ouvrirDevis(){
   document.getElementById('zone-devis').style.display='block';
   window.scrollTo({top:document.getElementById('zone-devis').offsetTop, behavior:'smooth'});
 }
+function ouvrirCommande(){
+  // Affiche la zone devis (comme pour devis)
+  document.getElementById('zone-devis').style.display = 'block';
+  window.scrollTo({
+    top: document.getElementById('zone-devis').offsetTop,
+    behavior: 'smooth'
+  });
+
+  // Cache le bouton "générer un devis"
+  document.querySelector("button[onclick='genererEmail()']").style.display = "none";
+
+  // Affiche le bouton "générer une commande"
+  document.getElementById("btn-commande").style.display = "block";
+}
 
 // Désactivation automatique des dates expirées
 
@@ -167,6 +181,89 @@ Merci d'avance pour votre retour.`;
   window.location.href = mailto;
 }
 
+function genererCommande(){
+
+  const confirmation = confirm(
+    "Votre logiciel de messagerie va s’ouvrir.\n\n" +
+    "Vous devrez ensuite cliquer sur « Envoyer » dans votre boîte mail\n" +
+    "pour transmettre votre commande.\n\n" +
+    "Voulez-vous continuer ?"
+  );
+
+  if (!confirmation) return;
+
+  const civilite = document.getElementById('civilite').value.trim();
+  const prenom = document.getElementById('prenom').value.trim();
+  const nom = document.getElementById('nom').value.trim();
+  const adresse = document.getElementById('adresse').value.trim();
+  const cp = document.getElementById('cp').value.trim();
+  const commune = document.getElementById('commune').value.trim();
+  const tel = document.getElementById('telephone').value.trim();
+
+  if(!civilite || !prenom || !nom || !adresse || !cp || !commune || !tel){
+    alert('Merci de remplir tous les champs client.');
+    return;
+  }
+
+  const dateEl = document.querySelector("input[name='date']:checked");
+  if(!dateEl){
+    alert('Merci de choisir une date de livraison.');
+    return;
+  }
+
+  const dateChoisie = dateEl.value;
+
+  const items = [
+    ['Poule rouge','poule_rouge'],['Poule noire','poule_noire'],['Coucou','coucou'],['Sussex','sussex'],
+    ['Faverolle','faverolle'],['Houdan','houdan'],['Araucana','araucana'],['Brahma','brahma'],
+    ['Gauloise grise','gauloise'],['Vorwerk','vorwerk'],['Cendrée','cendree'],
+    ['Noirans','noirans'],['Azur','azur'],['Leghorn','leghorn'],
+    ['Poule Soie','soie'],['Bantam Pékin','bantam'],['Hollandaise Huppée','hollandaise'],['Padoue','padoue'],
+    ['Sabelpoot','sabelpoot'],['Nagasaki','nagasaki'],['Wyandotte','wyandotte'],
+    ['Coq Adulte 20 semaines','coq_adulte_20s'],['Coq Blanc 5 semaines','coq_blanc_5s'],['Coq Rouge 5 semaines','coq_rouge_5s'],['Coq Cou-nu 5 semaines','coq_counu_5s'],
+    ['Poulet Blanc 5 semaines','poulet_blanc_5s'],['Poulet Cou-nu 5 semaines','poulet_counu_5s'],['Poulet Rouge 5 semaines','poulet_rouge_5s'],
+    ['Pintades 6 semaines','pintades_6s'],['Oie Blanche 3 semaines','oie_blanche_3s'],['Oie Grise 3 semaines','oie_grise_3s'],['Canard de Barbarie 4 semaines','barbarie_4s']
+  ];
+
+  let commande = "";
+  items.forEach(([nom,id])=>{
+    const q = Number(document.getElementById(id).value || 0);
+    if(q>0) commande += `- ${nom} : ${q}\n`;
+  });
+
+  if(!commande){
+    alert("Merci d’indiquer au moins une quantité.");
+    return;
+  }
+
+  const body = `Bonjour,
+
+Voici ma commande :
+
+Informations client :
+- Civilité : ${civilite}
+- Prénom : ${prenom}
+- Nom : ${nom}
+- Adresse : ${adresse}
+- Code Postal : ${cp}
+- Commune : ${commune}
+- Téléphone : ${tel}
+
+Date de livraison choisie :
+- ${dateChoisie}
+
+Liste des volailles commandées :
+${commande}
+
+Merci.`;
+
+  const mailto = 'mailto:silo.pacy-appros@soufflet.com?subject='
+    + encodeURIComponent('Commande de volailles')
+    + '&body=' + encodeURIComponent(body);
+
+  window.location.href = mailto;
+}
+
 function reinitialiserForm(){
   ['civilite','prenom','nom','adresse','cp','commune','telephone'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
   document.querySelectorAll("input[name='date']").forEach(r=>r.checked=false);
@@ -229,6 +326,8 @@ document.addEventListener("DOMContentLoaded", chargerDates);
 </div></details>
 
 <button class="btn" onclick="ouvrirDevis()">Demander un devis</button>
+
+<button class="btn secondary" onclick="ouvrirCommande()">Commander</button>
 
 <div class="contact-section">
   <h2>Nous contacter</h2>
@@ -306,6 +405,11 @@ document.addEventListener("DOMContentLoaded", chargerDates);
 
   <button class="btn" onclick="genererEmail()">Générer mon email de demande de devis</button>
   <button class="btn secondary" onclick="reinitialiserForm()">Réinitialiser</button>
+
+<button id="btn-commande" class="btn" style="display:none;" onclick="genererCommande()">
+  Générer mon email de commande
+</button>
+
 </div>
 
 </div>
